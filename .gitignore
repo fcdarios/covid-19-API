@@ -1,0 +1,4 @@
+# Archivos ignorados por git
+.idea
+sample.html
+.env
