@@ -15,7 +15,7 @@
     DB_PORT=5432
 
 ### Clonar de git
-    git clone https://github.com/fcdarios/covid-19.git
+    git clone https://github.com/fcdarios/covid-19-API.git
 
 ## Instalacion
     npm init
