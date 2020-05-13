@@ -3,8 +3,8 @@ const User = require('../models/User');
 class UserController {
 
     // Recibe las peticiones y regresa una respuesta en formato json
-    getAll = async(req, res) => {
-        const users = User.findAll({}).then((data) => {
+    getAll = async (req, res) => {
+        const users = await User.findAll({}).then((data) => {
             res.send(data);
         }).catch((err) => {
             console.log(err);
@@ -13,7 +13,7 @@ class UserController {
 
     getById = async(req, res) => {
         const id = parseInt(req.params.id);
-        const users = User.findAll({
+        const users = await User.findAll({
             where: {
                 id: id
             }
