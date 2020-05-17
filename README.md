@@ -25,9 +25,7 @@
     npm install --save pg pg-hstore
     npm install --save sequelize
     npm install dotenv --save
- ###### No requeridos aun   
-    npm install jsonwebtoken (Autentificacion)
-    npm install ejs (Opcional para vistas)
+    npm i jsonwebtoken bcryptjs
 
 ### Versiones
 - NodeJS v12.16.X

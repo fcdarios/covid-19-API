@@ -5,27 +5,27 @@
 --  CREATE DATABASE covid19;
 
 -- Tables
-CREATE TABLE user (
-    id serial not null constraint user_pk primary key,
-    name character varying(100),
-    username character varying(50) NOT NULL,
-    email character varying(50) NOT NULL,
-    password character varying(50) NOT NULL,
-    createdAt date DEFAULT CURRENT_DATE,
-    updatedAt date DEFAULT CURRENT_DATE
+CREATE TABLE userS (
+    id serial,
+    name VARCHAR(50),
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    constraint userPK primary KEY (id),
+    constraint userUQ1 UNIQUE (username),
+    constraint userUQ2 UNIQUE (email)
 );
 
 create table rol(
-    id serial not null constraint rol_pk primary key,
-    name varchar(100),
-    description varchar(100)
-    createdAt date DEFAULT CURRENT_DATE,
-    updatedAt date DEFAULT CURRENT_DATE
+    id serial,
+    name VARCHAR(50),
+    description varchar(100),
+    constraint rolPK primary KEY (id)
 );
 
-create table user_type(
-    id_user serial not null,
-    id_type serial not null,
-    constraint user_typeFK1 FOREIGN KEY (id_user) REFERENCES user(id),
-    constraint user_typeFK2 FOREIGN KEY (id_type) REFERENCES rol(id)
+create table user_rol(
+    id_user int not null,
+    id_rol int not null,
+    constraint user_typeFK1 FOREIGN KEY (id_user) REFERENCES users(id),
+    constraint user_typeFK2 FOREIGN KEY (id_rol) REFERENCES rol(id)
 );

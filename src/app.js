@@ -9,7 +9,7 @@ const app = express()
 // Settings
 app.set('appName', 'Proyecto Covid-19');
 app.set('host', 'localhost');
-app.set('port', 3000);
+app.set('port', 3001);
 
 // Middlewares
 app.use(morgan('dev'));
