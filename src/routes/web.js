@@ -1,15 +1,21 @@
 const { Router } = require("express")
 const router = Router()
-const { UserController } = require('../controllers');
+const { AuthController } = require('../controllers');
 
 // Agrega las rutas para los usuarios
 const userRouter = require('./UserRoute')
 
-router.get('/',  (req, res) => {
+
+router.get('/', AuthController.verifyToken,  (req, res) => {
     res.send("Hola")
 });
-router.post('/login', UserController.logIn);
-// Usa las rutas
+
+
+router.post('/login', AuthController.logIn);
+router.post('/signin', AuthController.signIn);
+
+
+// Define las rutas de usuario
 router.use('/user', userRouter);
 
 

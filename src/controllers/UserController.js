@@ -1,5 +1,4 @@
-const {User, encryptPassword, validatePassword} = require('../models/UserModel');
-const jwt = require('jsonwebtoken');
+const {User, encryptPassword} = require('../models/UserModel');
 
 
 // --------- Controlador para usuarios ---------
@@ -12,47 +11,6 @@ class UserController {
         }).catch((err) => {
             console.log(err);
         });
-    };
-
-    logIn = async(req, res) => {
-        const {username, password} = req.body;
-        console.log(username, ' ', password)
-
-
-        await User.findAll({
-            where: {
-                username: username 
-            }}).then(async (data) =>  {
-                const user = data[0].dataValues;
-                const pass = user.password
-                
-                const isValid = await validatePassword(password, pass);
-
-                if (isValid) {
-                    delete user.password
-
-                    // Aqui debe de recuperar los roles del usuario
-
-                    // Crear token para usuario 
-                    const token = jwt.sign(user.email, process.env.DB_NAME);
-                    user.token = token;
-
-                    // regresar json con informacion del usuario
-                    return res.send(user);
-                } else {
-                    const response = {'message' : 'Incorrect password'};
-                    return res.send(response);
-                }
-                console.log(isValid)
-                return res.send('a')
-                
-        }).catch((err) => {
-            console.log(err);
-        });
-        
-
-
-        
     };
 
     getById = async(req, res) => {
