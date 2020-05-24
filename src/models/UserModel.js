@@ -3,11 +3,9 @@ const { DataTypes, Sequelize } = require('sequelize');
 const sequelize = require('../database');
 const bcrypt = require('bcryptjs');
 const UserRolModel = require('../models/UserRolModel');
-const {Rol, roles} = require('../models/RolModel');
+const {roles} = require('../models/RolModel');
 const jwt = require('jsonwebtoken');
 
-
-const { response } = require('express');
 
 // Definicion del modelo de Usuario
     const User = sequelize.define('User', {
