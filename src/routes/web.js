@@ -3,20 +3,26 @@ const router = Router()
 const { AuthController } = require('../controllers');
 
 // Agrega las rutas para los usuarios
-const userRouter = require('./UserRoute')
+const userRouter = require('./User_Route')
 
+const Especialidad_Route = require('./Especialidad_Route')
 
-router.get('/', AuthController.verifyToken,  (req, res) => {
+router.get('/', AuthController.verifyToken,  (req, res, next) => {
+    console.log(res.id_user)
+    console.log(res.user)
     res.send("Hola")
 });
 
-
+// Login
 router.post('/login', AuthController.logIn);
 router.post('/signin', AuthController.signIn);
 
 
 // Define las rutas de usuario
-router.use('/user', userRouter);
+// Con AuthController.verifyToken Se protegen todas las rutas pertenecientes al usuario
+router.use('/user', AuthController.verifyToken,  userRouter);
+
+router.use('/especialidad',AuthController.verifyToken, Especialidad_Route);
 
 
   
