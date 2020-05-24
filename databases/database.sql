@@ -7,8 +7,7 @@
 -- Tables
 CREATE TABLE users (
     id serial,
-    nombre VARCHAR(50),
-    apellidos VARCHAR(50),
+    name VARCHAR(50),
     username VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
     password VARCHAR(100) NOT NULL,
@@ -34,7 +33,7 @@ create table user_rol(
 create table especialidad(
     id serial not null constraint especialidad_pk primary key,
     especialidad varchar(100),
-    description varchar(100)
+    description text
 );
 
 CREATE TABLE medico (

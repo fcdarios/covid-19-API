@@ -6,8 +6,9 @@ class UserController {
 
     // Recibe las peticiones y regresa una respuesta en formato json
     getAll = async (req, res) => {
-        const users = await User.findAll({}).then((data) => {
-            res.send(data);
+        await User.findAll({}).then((data) => {
+            const users = data;
+            res.send(users);
         }).catch((err) => {
             console.log(err);
         });
