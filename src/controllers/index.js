@@ -10,3 +10,6 @@ exports.Cirugia_Controller = require('./Cirugia_Controller');
 exports.Consulta_Controller = require('./Consulta_Controller');
 exports.Enf_Cronica_Controller = require('./Enf_Cronica_Controller');
 exports.Especialidad_Controller = require('./Especialidad_Controller');
+exports.Receta_Controller = require('./Receta_Controller');
+exports.Receta_Medicamento_Controller = require('./Receta_Medicamento_Controller');
+exports.Servicio_Controller = require('./Servicio_Controller');
