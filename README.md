@@ -41,6 +41,12 @@
 
 ## Comandos git
 
+
+
+#### Hagan sus cambios en la rama dev
+    git checkout dev  // Cambiar a la rama dev
+    git push origin dev
+
 ###### 1 Antes de subir cualquier cambio hacer pull
 ###### 2 Si no quieren subir todos los cambios especificar los archivos en el git add. Sin el -A
 
