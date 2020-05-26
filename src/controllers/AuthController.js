@@ -28,7 +28,7 @@ class AuthController {
         if (!token) {
             return res.status(401).json({
                 auth: false,
-                message : "No Token provided"
+                message : "Token no encontrado"
             });
         }
         jwt.verify(token, process.env.DB_NAME, (err, data) => {

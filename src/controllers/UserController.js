@@ -45,7 +45,6 @@ class UserController {
     update = async(req, res) => {
         const user = req.body;
         user.password = await encryptPassword(user.password)
-
         await User.update(user, {
             where: {
                 id: user.id
