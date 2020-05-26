@@ -1,74 +1,78 @@
-const {User, encryptPassword} = require('../models/UserModel');
+const Receta_Model = require('../models/Receta_Model');
 
+// --------- Controlador para Recetas ---------
+// Recibe las peticiones y regresa una respuesta en formato json
 
-// --------- Controlador para usuarios ---------
-class UserController {
+class Receta_Controller {
 
-    // Recibe las peticiones y regresa una respuesta en formato json
+    // Consulta select de todos los valores de la tabla
     getAll = async (req, res) => {
-        const users = await User.findAll({}).then((data) => {
-            res.send(data);
+        await Receta_Model.findAll({}).then((data) => {
+
+            // Regresa los valores en JSON
+            res.json(data);
+
         }).catch((err) => {
             console.log(err);
         });
     };
 
+    // Consulta select por id
     getById = async(req, res) => {
         const id = parseInt(req.params.id);
-        const users = await User.findAll({
+        await Receta_Model.findAll({
             where: {
                 id: id
             }
         }).then(async (data) =>  {
-            const user = data[0].dataValues;
-            user.password = await encryptPassword(user.password)
+            //  -------
 
-            console.log("password: ",user.password)
-            
+            return res.json(data);
 
-            return res.send(data);
+            //  -------
         }).catch((err) => {
             console.log(err);
         });
     };
-
+user
+    // POST agrega una registro nuevo
     add = async(req, res) => {
-        const user = req.body;
-        user.password = await encryptPassword(user.password)
-        User.create(user).then((value) => {
-            value.respuesta = "Usuario Agregado"
-            res.send(value);
+        const datos = req.body;
+
+
+        await Receta_Model.create(datos).then((value) => {
+            value.respuesta = "Registro Agregado"
+            res.json(value);
         });
     };
 
+    // PUT Actualiza un valor
     update = async(req, res) => {
-        const user = req.body;
-        user.password = await encryptPassword(user.password)
+        const datos = req.body;
 
-        await User.update(user, {
+        await Receta_Model.update(datos, {
             where: {
-                id: user.id
+                id: datos.id
             }
         }).then((data) => {
-            const response = user
+            const response = datos
             response.message = 'UPDATE'
-            res.send(response);
+            res.json(response);
         });
     };
 
 
     delete = async(req, res) => {
-        const person = req.body;
-        const user = await User.destroy({
+        const datos = req.body;
+        await Receta_Model.destroy({
             where: {
-                id: person.id
+                id: datos.id
             }
         }).then((data) => {
-            person.response = "Usuario eliminado con exito"
-            res.send(person);
+            datos.response = "Registro eliminado con exito"
+            res.json(datos);
         });
     };
 }
 
-
-module.exports = new UserController();
+module.exports = new Receta_Controller();
