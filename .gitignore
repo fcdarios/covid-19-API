@@ -6,3 +6,5 @@ node_modules
 .directory
 package-lock.json
 package.json
+
+.env2
