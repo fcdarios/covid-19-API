@@ -1,4 +1,4 @@
-const {Paciente_Model} = require('../models/Paciente_Model');
+const Paciente_Model = require('../models/Paciente_Model');
 
 
 // --------- Controlador para usuarios ---------

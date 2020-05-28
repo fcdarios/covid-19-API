@@ -1,4 +1,4 @@
-const { Paciente_Alergia_Model } = require('../models/Medicamento_Model');
+const  Paciente_Alergia_Model  = require('../models/Medicamento_Model');
 
 
 // --------- Controlador para usuarios ---------
