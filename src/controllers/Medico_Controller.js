@@ -4,6 +4,22 @@ const Medico_Model = require('../models/Medico_Model');
 class MedicosController {
 
     // Recibe las peticiones y regresa una respuesta en formato json
+    Login = async (req, res) => {
+        const { email, password } =req.body;
+        await User.findAll({
+            where: {
+                email: email,
+                password: password
+            }
+        }).then(async (data) =>  {
+            const Medico = data[0].dataValues;
+            Medico.password = await encryptPassword(Medico.password)
+            return res.send(data);
+        }).catch((err) => {
+            console.log(err);
+        });
+    };
+
     getAll = async (req, res) => {
         await Medico_Model.findAll({}).then((data) => {
             const Medi = data;
@@ -26,9 +42,22 @@ class MedicosController {
         });
     };
 
+    getByUserId = async(req, res) => {
+        const id = parseInt(req.params.id);
+        const Medi = await Medico_Model.findAll({
+            where: {
+                id_user: id
+            }
+        }).then(async (data) =>  {
+            return res.send(data);
+        }).catch((err) => {
+            console.log(err);
+        });
+    };
+
     add = (req, res) => {
         const Medic = req.body;
-        Medico_Model.create(Med).then((value) => {
+        Medico_Model.create(Medic).then((value) => {
             value.respuesta = "Medico Agregado"
             res.send(value);
         });

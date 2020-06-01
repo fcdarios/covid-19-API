@@ -27,6 +27,19 @@ class PacienteController {
         });
     };
 
+    getByUserId = async(req, res) => {
+        const id = parseInt(req.params.id);
+        const Paciente = await Paciente_Model.findAll({
+            where: {
+                id_user: id
+            }
+        }).then(async (data) =>  {
+            return res.send(data);
+        }).catch((err) => {
+            console.log(err);
+        });
+    };
+
     add = (req, res) => {
         const Paciente = req.body;
         Paciente_Model.create(Paciente).then((value) => {

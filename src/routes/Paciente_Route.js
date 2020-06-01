@@ -11,6 +11,7 @@ router.get('/:id', Paciente_Controller.getById);
 router.post('/', Paciente_Controller.add);
 router.put('/', Paciente_Controller.update);
 router.delete('/', Paciente_Controller.delete);
+router.get('/info/:id', Paciente_Controller.getByUserId)
 
 // Exporta el modulo de rutas
 module.exports = router;
