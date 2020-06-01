@@ -7,7 +7,11 @@ const Sequelize = require('sequelize');
 //     logging: false
 // });
 
-const sequelize = new Sequelize(process.env.DB_URL)
+const sequelize = new Sequelize(process.env.DB_URL, {
+    ssl: {
+        rejectUnauthorized: true,
+    }
+});
 
 sequelize.authenticate().then(() => {
     console.log("Success!");
