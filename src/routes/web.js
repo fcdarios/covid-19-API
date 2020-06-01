@@ -23,7 +23,7 @@ const userRouter = require('./User_Route')
 
 
 router.get('/', (req, res) => {
-    res.send("Hola")
+    res.send("Actualizado")
 });
 
 // Login
