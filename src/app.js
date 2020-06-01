@@ -18,7 +18,7 @@ app.set('port', process.env.PORT || 3001);
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors({cors:{Server:{origin: "localhost:3000"}}}));
+app.use(cors({cors:{Server:{origin: "https://itc-covid-19-api.azurewebsites.net"}}}));
 
 // Routes
 app.use(router);
