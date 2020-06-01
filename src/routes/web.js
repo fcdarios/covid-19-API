@@ -23,7 +23,7 @@ const userRouter = require('./User_Route')
 
 
 router.get('/', (req, res) => {
-    res.send("Hola")
+    res.send("Actualizado")
 });
 
 // Login
@@ -49,7 +49,7 @@ router.use('/paciente',AuthController.verifyToken,  Paciente_Route);
 router.use('/receta_medicamento',AuthController.verifyToken, Receta_Medicamento_Route);
 router.use('/receta',AuthController.verifyToken, Receta_Route);
 router.use('/servicio',AuthController.verifyToken, Servicio_Route);
-router.use('/user',AuthController.verifyToken,  userRouter);
+router.use('/user',  userRouter);
   
 // Exporta el modulo de todas las rutas para ser usado por app.js
 module.exports = router;

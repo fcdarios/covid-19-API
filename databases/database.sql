@@ -40,12 +40,12 @@ CREATE TABLE medico (
     id serial not null constraint medico_pk primary key,
     id_user serial not null,
     id_especialidad serial not null,
-    cedula varchar(50) NOT NULL,
-    direccion varchar(50) NOT NULL,
-    municipio varchar(50) NOT NULL,
-    estado varchar(50) NOT NULL,
-    pais varchar(50) NOT NULL,
-    telefono varchar(10) NOT NULL,
+    cedula varchar(50) ,
+    direccion varchar(50) ,
+    municipio varchar(50) ,
+    estado varchar(50) ,
+    pais varchar(50) ,
+    telefono varchar(10) ,
     constraint medicoFK1 FOREIGN KEY (id_especialidad) REFERENCES especialidad(id),
     constraint medicoFK2 FOREIGN KEY (id_user) REFERENCES users(id)
 );
@@ -59,13 +59,13 @@ CREATE TABLE caso_covid (
 CREATE TABLE paciente (
     id serial not null constraint pacinete_pk primary key,
     id_user serial not null,
-    direccion varchar(50) NOT NULL,
-    municipio varchar(50) NOT NULL,
-    estado varchar(50) NOT NULL,
-    pais varchar(50) NOT NULL,
-    telefono varchar(10) NOT NULL,
-    nacimineto date not null,
-    caso_covid19 serial not null,
+    direccion varchar(50) ,
+    municipio varchar(50) ,
+    estado varchar(50) ,
+    pais varchar(50) ,
+    telefono varchar(10) ,
+    nacimineto date ,
+    caso_covid19 serial ,
     constraint pacineteFK1 FOREIGN KEY (id_user) REFERENCES users(id),
     constraint pacineteFK2 FOREIGN KEY (caso_covid19) REFERENCES caso_covid(id)
 );
@@ -143,7 +143,7 @@ CREATE TABLE consulta (
     fecha date not null,
     constraint consultaFK1 FOREIGN KEY (id_paciente) REFERENCES paciente(id),
     constraint consultaFK2 FOREIGN KEY (id_especialidad) REFERENCES especialidad(id),
-    constraint consultaFK3 FOREIGN KEY (id_medico) REFERENCES medico(id)
+    constraint consultaFK3 FOREIGN KEY (id_medico) REFERENCES medico(id)\
 );
 
 CREATE TABLE receta (
