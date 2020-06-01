@@ -11,7 +11,7 @@ const cors = require('cors')
 app.set('appName', 'Proyecto Covid-19');
 app.set('host', 'localhost');
 
-app.set('port', process.env.PORT || process.env.SERVER_PORT);
+app.set('port', process.env.PORT || 3001);
 
 
 // Middlewares
