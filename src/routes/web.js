@@ -28,7 +28,7 @@ router.get('/', (req, res) => {
 
 // Login
 router.post('/login', AuthController.logIn);
-router.post('/signin', AuthController.signIn);
+router.post('/signup', AuthController.signUp);
 
 // Rutas para CRUDS de tablas
 // Con AuthController.verifyToken Se protegen todas las rutas pertenecientes al usuario
@@ -49,7 +49,7 @@ router.use('/paciente',AuthController.verifyToken,  Paciente_Route);
 router.use('/receta_medicamento',AuthController.verifyToken, Receta_Medicamento_Route);
 router.use('/receta',AuthController.verifyToken, Receta_Route);
 router.use('/servicio',AuthController.verifyToken, Servicio_Route);
-router.use('/user',  userRouter);
+router.use('/user', userRouter);
   
 // Exporta el modulo de todas las rutas para ser usado por app.js
 module.exports = router;
