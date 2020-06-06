@@ -19,9 +19,12 @@ class AuthController {
     signUp = async (req, res) => {
         const data = req.body;
         let idTypeUser = 3;
+        let roles = [];
         if (data.tipo == 'medico') {
             idTypeUser = 2;
-        }
+            roles = ['medico'];
+        }else roles = ['paciente'];
+
         const usuario = {};
         usuario.id = data.id;
         usuario.name = data.name;
@@ -34,11 +37,9 @@ class AuthController {
                 id_user : value.id,
                 id_rol : idTypeUser
             }
-
             await UserRolModel.create(UserRol).then((response) => {
                 delete value.id;
-                delete value.password;
-                
+                delete value.password; 
                 const token = jwt.sign(value.id, process.env.DB_NAME);
                 
                 usuario.id = value.id;
@@ -46,12 +47,10 @@ class AuthController {
                 usuario.email = value.email;
                 usuario.username = value.username
                 usuario.token = token;
-                
+                usuario.roles = roles;
                 delete usuario.id;
                 delete usuario.password;
-
                 console.log(usuario);
-
                 return res.status(200).json(usuario)
             }).catch((err) => {
                 let message = 'Operacion no exitosa'; ////////////////////////////

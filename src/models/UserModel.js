@@ -32,6 +32,8 @@ const jwt = require('jsonwebtoken');
     }
 
     const login = async (userData, res) => {
+        let message = '';
+        let code = 0;
         await User.findAll({
             where: {
                 username: userData.username 
@@ -68,11 +70,14 @@ const jwt = require('jsonwebtoken');
                             console.log(err);
                         });
                     } else {
-                        const response = { 'message': 'Incorrect password' };
-                        return res.status(401).json(response);
+                        code = 5
+                        message = 'Incorrect password';
+                        return res.status(401).json({code, message});
                     }
                 } else {
-                    return res.status(401).json({'message' : 'User not found'})
+                    code = 6
+                    message = 'User not found';
+                    return res.status(401).json({code, message})
                 }
         }).catch((err) => {
             console.log(err);
