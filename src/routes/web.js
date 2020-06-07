@@ -49,7 +49,7 @@ router.use('/paciente',AuthController.verifyToken,  Paciente_Route);
 router.use('/receta_medicamento',AuthController.verifyToken, Receta_Medicamento_Route);
 router.use('/receta',AuthController.verifyToken, Receta_Route);
 router.use('/servicio',AuthController.verifyToken, Servicio_Route);
-router.use('/user', userRouter);
+router.use('/user',AuthController.verifyToken, userRouter);
   
 // Exporta el modulo de todas las rutas para ser usado por app.js
 module.exports = router;

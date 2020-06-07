@@ -62,7 +62,8 @@ const jwt = require('jsonwebtoken');
                             // Crear token para usuario 
                             const token = jwt.sign(user.id, process.env.DB_NAME);
                             user.token = token;
-
+                            
+                            
                             delete res.roles
                             res.user = user
                             return true

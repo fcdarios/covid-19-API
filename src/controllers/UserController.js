@@ -1,11 +1,60 @@
 const {User, encryptPassword} = require('../models/UserModel');
+const { response } = require('express');
 
 
 // --------- Controlador para usuarios ---------
 class UserController {
 
     // Recibe las peticiones y regresa una respuesta en formato json
+
+    getPerfil = async(req, res) => {
+        const username = req.headers['username'];
+        const id = res.id_user;
+        let code = 0;
+        let message = ''
+
+        if (!username) {
+            code = 10;
+            message = 'Sin usuario';
+
+            return res.status(401).json({code, message});
+        }
+
+        await User.findAll({
+            where: {
+                id: id
+            }
+        }).then(async (data) =>  {
+            const user = data[0].dataValues;
+            if (user.username == username) {
+                code = 0;
+                message = 'Usuario y token validos';  
+                delete user.id
+                delete user.password
+                user.code = code;
+                user.message = message;
+                return res.status(200).json(user);
+            } else {
+                code = 11;
+                message = 'Usuario incorrecto';
+                return res.status(200).json({code, message});
+            }
+
+
+            return res.send(user);
+        }).catch((err) => {
+            console.log(err);
+        });
+
+
+       
+    };
+
+
+
     getAll = async (req, res) => {
+
+        console.log(res.id_user)
         await User.findAll({}).then((data) => {
             const users = data;
             res.send(users);
