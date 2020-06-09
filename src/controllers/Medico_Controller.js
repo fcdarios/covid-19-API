@@ -1,4 +1,5 @@
 const Medico_Model = require('../models/Medico_Model');
+const Especialidad = require('../models/Especialidad_Model');
 const Paciente = require('../models/Paciente_Model');
 const {User} = require('../models/UserModel');
 const Consulta = require('../models/Consulta_Model');
@@ -21,9 +22,8 @@ class MedicosController {
             consultas = await this.getDatosConsultas(req, res, data);
 
             
-           
-
-            //console.log(data[0].dataValues)
+          
+            
             
             
             return res.send(consultas);
@@ -47,6 +47,18 @@ class MedicosController {
         for (let index = 0; index < consultas.length; index++) {
             const c = consultas[index];
 
+
+            await Especialidad.findAll({
+                where: {
+                    id: c.id_especialidad
+                }
+            }).then(async (data) =>  {
+                consultas[index].especialidad = data[0].especialidad;
+                
+             }).catch((err) => {
+                 console.log(err);
+             });
+
             await Paciente.findAll({
                 where: {
                     id: c.id_paciente
@@ -64,11 +76,12 @@ class MedicosController {
                 attributes: ['id', 'username', 'name', 'email']
             }).then(async (data) =>  {
                consultas[index].usuario = data[0];
-               delete consultas[index].usuario.password
 
             }).catch((err) => {
                 console.log(err);
             });
+
+            
 
         }
 
