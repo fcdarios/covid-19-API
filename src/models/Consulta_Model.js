@@ -10,6 +10,7 @@ const Consulta_Model = sequelize.define('Consulta_Model', {
     evidencia: Sequelize.STRING,
     estado: Sequelize.STRING,
     fecha: Sequelize.DATE,
+    atendida: Sequelize.BOOLEAN,
 }, {
     tableName: "consulta",
     modelName: 'Consulta_Model',
