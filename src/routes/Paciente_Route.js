@@ -7,11 +7,12 @@ const { Paciente_Controller } = require('../controllers');
 
 //Al hacer las peticiones a la ruta '/user' redirreciona al controlador de usuarios
 router.get('/',  Paciente_Controller.getAll);
-router.get('/:id', Paciente_Controller.getById);
 router.post('/', Paciente_Controller.add);
 router.put('/', Paciente_Controller.update);
 router.delete('/', Paciente_Controller.delete);
 router.get('/info/:id', Paciente_Controller.getByUserId)
+
+router.get('/perfil', Paciente_Controller.getPerfil);
 
 // Exporta el modulo de rutas
 module.exports = router;

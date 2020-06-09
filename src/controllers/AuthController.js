@@ -12,9 +12,48 @@ class AuthController {
         const data = req.body;
         await login(data, res);
         const user = res.user
-        delete user.id
+
+        if (user.roles[0] == 'paciente') {
+           await Paciente_Model.findAll({
+                where: {
+                    id_user: user.id
+                }
+            }).then(async (data) =>  {
+                delete user.id
+                user.paciente = {};
+                user.paciente.direccion = data[0].direccion;
+                user.paciente.municipio = data[0].municipio;
+                user.paciente.estado = data[0].estado;
+                user.paciente.pais = data[0].pais;
+                user.paciente.telefono = data[0].telefono;
+                user.paciente.nacimineto = data[0].nacimineto;
+                user.paciente.caso_covid19 = data[0].caso_covid19;
         
-        return res.json(user)
+                console.log(data[0])
+                return res.json(user)
+            }).catch((err) => {
+                console.log(err);
+            });
+        }else{
+            await Medico_Model.findAll({
+                where: {
+                    id_user: user.id
+                }
+            }).then(async (data) =>  {
+                delete user.id
+                user.medico = {};
+                user.medico.id_especialidad = data[0].id_especialidad;
+                user.medico.cedula = data[0].cedula;
+                user.medico.direccion = data[0].direccion;
+                user.medico.municipio = data[0].municipio;
+                user.medico.estado = data[0].estado;
+                user.medico.pais = data[0].pais;
+                user.medico.telefono = data[0].telefono;
+                return res.json(user)
+            }).catch((err) => {
+                console.log(err);
+            });
+        }   
     };
 
     signUp = async (req, res) => {
@@ -43,16 +82,19 @@ class AuthController {
                 usuario.name = value.name;
                 usuario.email = value.email;
                 usuario.username = value.username
-                const token = jwt.sign(value.id, process.env.DB_NAME, {
-                    expiresIn: 1
-                });
+                const token = jwt.sign(value.id, process.env.DB_NAME);
                 usuario.token = token;
                 usuario.roles = roles;
                 delete usuario.password;
+
                 if (data.tipo == 'medico') {
+
                     let medico = {id_user: usuario.id};
                     await Medico_Model.create(medico).then((response => {
                         delete usuario.id;
+                        usuario.medico = response.dataValues;
+                        delete usuario.medico.id
+                        delete usuario.medico.id_user
                         console.log(usuario);
                         return res.status(200).json(usuario)
                     })).catch((error) => {
@@ -61,10 +103,15 @@ class AuthController {
                         console.log(err)
                         return res.status(401).json({ code, message});
                     });
+
                 }else {
+
                     let paciente = {id_user: usuario.id};
                     await Paciente_Model.create(paciente).then((response => {
                         delete usuario.id;
+                        usuario.paciente = response.dataValues;
+                        delete usuario.paciente.id
+                        delete usuario.paciente.id_user
                         console.log(usuario);
                         return res.status(200).json(usuario)
                     })).catch((error) => {
@@ -73,6 +120,8 @@ class AuthController {
                         console.log(err)
                         return res.status(401).json({ code, message});
                     });
+
+
                 }
             }).catch((err) => {
                 let message = 'Operacion no exitosa'; ////////////////////////////
