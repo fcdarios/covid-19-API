@@ -14,6 +14,9 @@ const sequelize = require('../database');
         telefono: Sequelize.STRING,
         nacimineto: Sequelize.DATE,
         caso_covid19: Sequelize.INTEGER,
+        alergias: Sequelize.STRING,
+        cirugias: Sequelize.STRING,
+        enf_cronicas: Sequelize.STRING,
     }, {
         tableName: "paciente",
         modelName: 'Paciente_Model',

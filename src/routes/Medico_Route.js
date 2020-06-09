@@ -13,6 +13,7 @@ router.put('/:id', Medico_Controller.update);
 router.put('/', Medico_Controller.Login);
 router.delete('/', Medico_Controller.delete);
 router.get('/info/:id', Medico_Controller.getByUserId)
+router.get('/consultas/:id_especialidad', Medico_Controller.getConsultas);
 
 // Exporta el modulo de rutas
 module.exports = router;

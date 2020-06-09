@@ -1,9 +1,85 @@
 const Medico_Model = require('../models/Medico_Model');
+const Paciente = require('../models/Paciente_Model');
+const {User} = require('../models/UserModel');
+const Consulta = require('../models/Consulta_Model');
 
 // --------- Controlador para usuarios ---------
 class MedicosController {
 
-    // Recibe las peticiones y regresa una respuesta en formato json
+    // Recibe las peticiones y regresa una respuesta en formato json.
+
+
+    getConsultas = async(req, res) => {
+        let consultas = [];
+        const id_especialidad = parseInt(req.params.id_especialidad);
+
+        await Consulta.findAll({
+            where: {
+                id_especialidad: id_especialidad
+            }
+        }).then(async (data) =>  {
+            consultas = await this.getDatosConsultas(req, res, data);
+
+            
+           
+
+            //console.log(data[0].dataValues)
+            
+            
+            return res.send(consultas);
+
+
+        }).catch((err) => {
+            console.log(err);
+        });
+    };
+
+    
+
+    async getDatosConsultas (req, res, data) {
+        let consultas = []
+
+        for (let index = 0; index < data.length; index++) {
+            const d = data[index];
+            consultas[index] = d.dataValues
+        }
+        
+        for (let index = 0; index < consultas.length; index++) {
+            const c = consultas[index];
+
+            await Paciente.findAll({
+                where: {
+                    id: c.id_paciente
+                }
+            }).then(async (data) =>  {
+               consultas[index].paciente = data[0];
+            }).catch((err) => {
+                console.log(err);
+            });
+
+            await User.findAll({
+                where: {
+                    id: consultas[index].paciente.id_user
+                },
+                attributes: ['id', 'username', 'name', 'email']
+            }).then(async (data) =>  {
+               consultas[index].usuario = data[0];
+               delete consultas[index].usuario.password
+
+            }).catch((err) => {
+                console.log(err);
+            });
+
+        }
+
+        return consultas;
+    }
+
+
+
+
+
+
     Login = async (req, res) => {
         const { email, password } =req.body;
         await User.findAll({

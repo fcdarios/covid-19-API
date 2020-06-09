@@ -21,6 +21,7 @@ class AuthController {
             }).then(async (data) =>  {
                 delete user.id
                 user.paciente = {};
+                user.paciente.id = data[0].id;
                 user.paciente.direccion = data[0].direccion;
                 user.paciente.municipio = data[0].municipio;
                 user.paciente.estado = data[0].estado;
@@ -28,6 +29,9 @@ class AuthController {
                 user.paciente.telefono = data[0].telefono;
                 user.paciente.nacimineto = data[0].nacimineto;
                 user.paciente.caso_covid19 = data[0].caso_covid19;
+                user.paciente.alergias = data[0].alergias;
+                user.paciente.enf_cronicas = data[0].enf_cronicas;
+                user.paciente.cirugias = data[0].cirugias;
         
                 console.log(data[0])
                 return res.json(user)
@@ -42,6 +46,7 @@ class AuthController {
             }).then(async (data) =>  {
                 delete user.id
                 user.medico = {};
+                user.medico.id = data[0].id;
                 user.medico.id_especialidad = data[0].id_especialidad;
                 user.medico.cedula = data[0].cedula;
                 user.medico.direccion = data[0].direccion;
