@@ -20,15 +20,7 @@ class MedicosController {
             }
         }).then(async (data) =>  {
             consultas = await this.getDatosConsultas(req, res, data);
-
-            
-          
-            
-            
-            
             return res.send(consultas);
-
-
         }).catch((err) => {
             console.log(err);
         });

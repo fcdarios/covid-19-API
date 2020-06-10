@@ -1,9 +1,88 @@
 const Paciente_Model = require('../models/Paciente_Model');
+const Medico = require('../models/Medico_Model');
+const {User} = require('../models/UserModel');
+const Especialidad = require('../models/Especialidad_Model');
+const Consulta = require('../models/Consulta_Model');
 const { response } = require('express');
 
 
 // --------- Controlador para usuarios ---------
 class PacienteController {
+
+    getConsultas = async(req, res) => {
+        const id = parseInt(req.params.id);
+        let consultas = [];
+
+        await Consulta.findAll({
+            where: {
+                id_paciente: id
+            }
+        }).then(async (data) =>  {
+            consultas = await this.getDatosConsultas(data);
+
+            return res.send(consultas);
+        }).catch((err) => {
+            console.log(err);
+        });
+    };
+
+
+    async getDatosConsultas (data) {
+        let consultas = []
+
+        for (let index = 0; index < data.length; index++) {
+            const d = data[index];
+            consultas[index] = d.dataValues
+        }
+        
+        for (let index = 0; index < consultas.length; index++) {
+            const c = consultas[index];
+
+
+            await Especialidad.findAll({
+                where: {
+                    id: c.id_especialidad
+                }
+            }).then(async (data) =>  {
+                consultas[index].especialidad = data[0].especialidad;
+                
+             }).catch((err) => {
+                 console.log(err);
+             });
+
+            await Medico.findAll({
+                where: {
+                    id: c.id_medico
+                }
+            }).then(async (data) =>  {
+                if(data[0]){
+                    consultas[index].medico = data[0];
+                }else{
+                    consultas[index].medico = null
+                }
+              
+            }).catch((err) => {
+                console.log(err);
+            });
+
+            if(consultas[index].medico){
+                await User.findAll({
+                    where: {
+                        id: consultas[index].medico.id_user
+                    },
+                    attributes: ['id', 'username', 'name', 'email']
+                }).then(async (data) =>  {
+                consultas[index].usuario = data[0];
+
+                }).catch((err) => {
+                    console.log(err);
+                });
+            }else{
+                consultas[index].usuario = null
+            }
+        }
+        return consultas;
+    }
 
 
     getPerfil = async(req, res) => {

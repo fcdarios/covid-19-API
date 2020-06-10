@@ -13,6 +13,7 @@ router.delete('/', Paciente_Controller.delete);
 router.get('/info/:id', Paciente_Controller.getByUserId)
 
 router.get('/perfil', Paciente_Controller.getPerfil);
+router.get('/consultas/:id', Paciente_Controller.getConsultas);
 
 // Exporta el modulo de rutas
 module.exports = router;
