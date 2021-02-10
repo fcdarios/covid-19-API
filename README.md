@@ -19,49 +19,6 @@
     npm i dotenv --save
     npm i jsonwebtoken bcryptjs
 
-### Paso 3 Dentro de su package.json modifican la parte de scripts para que este de la siguiente forma
-
-    "scripts": {
-    "dev": "nodemon src/app.js"
-    },
-
-### Paso 4 Crear un archivo ".env" en la raiz del proyecto con lo siguiente
-    DB_USER=SuUsario
-    DB_PASS=1234
-    DB_NAME=covid19
-    DB_HOST=localhost
-    DB_PORT=5432
-    JWT_SECRET=topicosweb
-
-### Paso 5 Crean la base de datos en postgres
-
-### Paso 6 Correr servidor con: 
-    npm run dev
-
-
-## Comandos git
-
-
-
-#### Hagan sus cambios en la rama dev
-    git checkout dev  // Cambiar a la rama dev
-    git push -u origin dev
-
-###### 1 Antes de subir cualquier cambio hacer pull
-###### 2 Si no quieren subir todos los cambios especificar los archivos en el git add. Sin el -A
-
-    git pull
-    git add -A
-    git commit -m "Mensaje de cambios realizados"
-    git push -u origin master
-
-
-
 ### Versiones
 - NodeJS v12.16.X
 - npm 6.14.X
-
-
-#### Guardar credenciales de git
-    git config credential.helper store
-    git pull
